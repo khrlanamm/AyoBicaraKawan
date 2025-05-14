@@ -12,7 +12,20 @@
           "package_name": "com.khrlanamm.ayobicarakawan"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "567707027484-l2coe43surbljrefne62n3trkvlbjrlf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khrlanamm.ayobicarakawan",
+            "certificate_hash": "5e09c96354f0f5dbc20755b62219221295265893"
+          }
+        },
+        {
+          "client_id": "567707027484-44l1ee94ku2m3vhiqikb6bl8cf8m0nvd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBB8ppMmpZttw9HPRGOmHvzLjWQz421GHk"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "567707027484-44l1ee94ku2m3vhiqikb6bl8cf8m0nvd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
