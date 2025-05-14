@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">ABK</string>
+
+    <string name="abk_logo_desc">Logo ABK Ayo Bicara Kawan</string>
+
+    <string name="title_home">Beranda</string>
+    <string name="title_report">Lapor</string>
+    <string name="title_chat">Curhat</string>
+    <string name="title_history">Riwayat</string>
+
+    <string name="hello_blank_fragment">Sedang dalam pengembangan</string>
+
+    <!--Auth page-->
+    <string name="input_name">Nama Lengkap</string>
+    <string name="input_email">Alamat Email</string>
+    <string name="input_password">Kata Sandi</string>
+    <string name="input_confirm_password">Ulang Kata Sandi</string>
+    <string name="daftar">DAFTAR</string>
+    <string name="masuk">MASUK</string>
+    <string name="atau">Atau</string>
+    <string name="login_google">Masuk Dengan Google</string>
+    <string name="register_google">Daftar Dengan Google</string>
+</resources>
