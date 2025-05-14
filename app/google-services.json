@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "567707027484",
+    "project_id": "ayo-bicara-kawan",
+    "storage_bucket": "ayo-bicara-kawan.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567707027484:android:a96086d3ab83121115b7d9",
+        "android_client_info": {
+          "package_name": "com.khrlanamm.ayobicarakawan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB8ppMmpZttw9HPRGOmHvzLjWQz421GHk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

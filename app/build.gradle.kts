@@ -1,9 +1,18 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("C:\\Users\\HP\\AndroidStudioProjects\\MyKeyStore\\abk_keystore.jks")
+            storePassword = "ABKGitho81"
+            keyAlias = "key-abk"
+            keyPassword = "ABKGitho81"
+        }
+    }
     namespace = "com.khrlanamm.ayobicarakawan"
     compileSdk = 35
 
@@ -15,6 +24,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig = signingConfigs.getByName("debug")
     }
 
     buildTypes {
@@ -39,7 +49,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
