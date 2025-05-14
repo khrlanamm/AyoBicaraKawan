@@ -32,9 +32,6 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        // Hapus ActionBar setup jika tidak digunakan
-        // setupActionBarWithNavController(navController, appBarConfiguration)
-
         navView.setupWithNavController(navController)
     }
 }

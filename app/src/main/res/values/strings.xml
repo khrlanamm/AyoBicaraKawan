@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">ABK</string>
-
     <string name="abk_logo_desc">Logo ABK Ayo Bicara Kawan</string>
 
     <string name="title_home">Beranda</string>
@@ -20,4 +19,12 @@
     <string name="atau">Atau</string>
     <string name="login_google">Masuk Dengan Google</string>
     <string name="register_google">Daftar Dengan Google</string>
+
+    <!--Helper-->
+    <string name="selanjutnya">Selanjutnya</string>
+    <string name="button_back">Button Back</string>
+    <string name="logo_kaizen">Logo Kaizen</string>
+    <string name="logo_google">Logo Google</string>
+    <string name="tutup">Tutup</string>
+    <string name="masuk_ke_akun">Masuk ke Akun</string>
 </resources>
