@@ -14,22 +14,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ABK.NoActionBar"
         tools:targetApi="31">
+
         <activity
             android:name=".ui.auth.SignUpActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.auth.SignInActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:label="@string/app_name" />
+
+    </application>
 </manifest>
