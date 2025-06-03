@@ -25,11 +25,6 @@ class ReportFragment : Fragment() {
         val factory = ReportViewModelFactory(requireContext())
         val reportViewModel = ViewModelProvider(this, factory).get(ReportViewModel::class.java)
 
-        val textView: TextView = binding.textReport
-        reportViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
         return root
     }
 

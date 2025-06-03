@@ -27,4 +27,70 @@
     <string name="logo_google">Logo Google</string>
     <string name="tutup">Tutup</string>
     <string name="masuk_ke_akun">Masuk ke Akun</string>
+
+    <!--Home-->
+    <string name="account_name">Selamat Datang!</string>
+    <string name="article_title">Edukasi</string>
+    <string name="article_description">Ayo baca artikel terkait Bullying dan Kekerasan</string>
+    <string name="account">Account</string>
+    <string name="searchArticle">Cari Artikel…</string>
+    <string name="lapor">Menu Lapor</string>
+    <string name="curhat">Menu Curhat</string>
+
+    <string-array name="tempdata_article_title">
+        <item>Cara Efektif Membangun Kepercayaan Diri Korban Bullying</item>
+        <item>Memahami Bullying: Pengertian, Jenis, Dampak, dan Cara Mengatasinya</item>
+        <item>Psikologi Bullying: Mengapa Pelaku Melakukan Tindakan Ini?</item>
+        <item>Bullying di Sekolah: Identifikasi, Pencegahan, dan Solusinya</item>
+        <item>5 Langkah Praktis Menghadapi Bullying di Lingkungan Sekolah</item>
+        <item>Stop Bullying! Ini Cara Melawan Tanpa Kekerasan</item>
+        <item>Dampak Jangka Panjang Bullying pada Kesehatan Mental</item>
+    </string-array>
+
+    <integer-array name="tempdata_article_image">
+        <item>@drawable/tempdata_article_image1</item>
+        <item>@drawable/tempdata_article_image2</item>
+        <item>@drawable/tempdata_article_image3</item>
+        <item>@drawable/tempdata_article_image4</item>
+        <item>@drawable/tempdata_article_image5</item>
+        <item>@drawable/tempdata_article_image6</item>
+        <item>@drawable/tempdata_article_image7</item>
+    </integer-array>
+
+    <string-array name="tempdata_article_description">
+        <item>Korban bullying sering mengalami penurunan kepercayaan diri yang drastis. Menurut penelitian, 85% korban bullying melaporkan penurunan harga diri. Artikel ini membahas strategi praktis untuk membangun kembali kepercayaan diri setelah mengalami trauma bullying.</item>
+        <item>Bullying adalah masalah serius yang memengaruhi jutaan anak dan remaja setiap tahunnya. Data UNESCO menunjukkan 1 dari 3 siswa mengalami bullying di sekolah. Mari kita pahami lebih dalam tentang fenomena ini dan cara efektif untuk melawannya.</item>
+        <item>Apa yang sebenarnya mendorong seseorang menjadi pelaku bullying? Artikel ini mengupas tuntas motif psikologis di balik perilaku bullying, dari kebutuhan akan kekuasaan hingga pengaruh lingkungan keluarga.</item>
+        <item>Sekolah seharusnya menjadi tempat yang aman, namun seringkali justru menjadi sumber trauma bagi korban bullying. Simak panduan lengkap untuk guru, orang tua, dan siswa dalam menciptakan lingkungan sekolah yang bebas bullying.</item>
+        <item>Menghadapi bullying tidak harus dengan kekerasan. Temukan 5 strategi praktis yang telah terbukti efektif berdasarkan penelitian terbaru untuk menghadapi bullying di lingkungan sekolah sehari-hari.</item>
+        <item>Bullying bisa dilawan tanpa menjadi pelaku kekerasan juga. Artikel ini mengajarkan teknik asertif dan komunikasi efektif untuk menghentikan bullying sekaligus menjaga martabat diri.</item>
+        <item>Dampak bullying tidak berhenti saat masa sekolah usai. Studi longitudinal menunjukkan korban bullying berisiko 2 kali lebih tinggi mengalami gangguan kecemasan dan depresi di masa dewasa. Pahami dampak jangka panjang dan cara meminimalkannya.</item>
+    </string-array>
+
+    <string-array name="tempdata_article_url">
+        <item>https://www.kompasiana.com/psikologi/artikel-cara-membangun-kepercayaan-diri-korban-bullying</item>
+        <item>https://www.unicef.org/indonesia/id/bullying-pengertian-dan-cara-mengatasi</item>
+        <item>https://www.psychologytoday.com/bullying-psychology</item>
+        <item>https://www.kemdikbud.go.id/pencegahan-bullying-di-sekolah</item>
+        <item>https://www.healthline.com/cara-menghadapi-bullying</item>
+        <item>https://www.stopbullying.gov/melawan-tanpa-kekerasan</item>
+        <item>https://www.ncbi.nlm.nih.gov/dampak-jangka-panjang-bullying</item>
+    </string-array>
+    <!--    data dummy article-->
+
+    <!--    Home After Signed-->
+    <string name="greetings_with_name">"Halo, Nama Pengguna! ></string>
+    <string name="progress_title">Progress Kamu</string>
+    <string name="progress_title2">Selamat Datang!</string>
+    <string name="number_of_exercise">Banyak latihan: </string>
+
+
+    <string name="hallo">Hallo!</string>
+    <string name="article_summary">Lorem Ipsum Dolor Sir Amet</string>
+    <string name="article_title_data">Judul Artikel Judul Artikel Judul Artikel Judul Artikel Judul Artikel Judul Artikel Judul Artikel</string>
+    <string name="article_description_data">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="detail_title">Detail Latihan</string>
+    <string name="about">About Kaizen Speaking</string>
 </resources>

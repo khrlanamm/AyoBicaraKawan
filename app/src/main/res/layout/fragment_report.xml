@@ -1,22 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.report.ReportFragment">
+    android:background="@color/background_abk"
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/text_report"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardForm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/titleForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Formulir Pelaporan Tindak Kekerasan"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <CheckBox
+                        android:id="@+id/checkKorban"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Korban"
+                        android:buttonTint="@color/purple_abk"/>
+
+                    <CheckBox
+                        android:id="@+id/checkSaksi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Saksi"
+                        android:layout_marginStart="16dp"
+                        android:buttonTint="@color/purple_abk"/>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/inputNama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nama Pelapor"
+                    android:inputType="textPersonName"
+                    android:background="@android:color/transparent"
+                    android:layout_marginTop="12dp"
+                    android:paddingBottom="4dp"
+                    android:drawableBottom="@android:drawable/divider_horizontal_bright"/>
+
+                <EditText
+                    android:id="@+id/inputTanggal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tanggal Kejadian"
+                    android:inputType="date"
+                    android:background="@android:color/transparent"
+                    android:layout_marginTop="8dp"
+                    android:paddingBottom="4dp"
+                    android:drawableBottom="@android:drawable/divider_horizontal_bright"/>
+
+                <EditText
+                    android:id="@+id/inputTempat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tempat Kejadian"
+                    android:inputType="text"
+                    android:background="@android:color/transparent"
+                    android:layout_marginTop="8dp"
+                    android:paddingBottom="4dp"
+                    android:drawableBottom="@android:drawable/divider_horizontal_bright"/>
+
+                <EditText
+                    android:id="@+id/inputDeskripsi"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:hint="Deskripsi Kejadian"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
+                    android:background="@drawable/bg_edittext_rounded"
+                    android:layout_marginTop="8dp"
+                    android:padding="12dp"/>
+
+                <EditText
+                    android:id="@+id/inputNomor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nomor yang bisa dihubungi"
+                    android:inputType="phone"
+                    android:background="@android:color/transparent"
+                    android:layout_marginTop="8dp"
+                    android:paddingBottom="4dp"
+                    android:drawableBottom="@android:drawable/divider_horizontal_bright"/>
+
+                <TextView
+                    android:id="@+id/textUpload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unggah Gambar/Bukti"
+                    android:layout_marginTop="12dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
+
+                <Button
+                    android:id="@+id/btnUpload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Pilih Berkas"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/purple_abk_light"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnKirim"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Kirim Laporan"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/purple_abk"
+            android:drawableEnd="@drawable/ic_send"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            app:iconPadding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/cardForm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
