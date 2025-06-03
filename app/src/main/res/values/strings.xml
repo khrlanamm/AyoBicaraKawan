@@ -22,7 +22,7 @@
 
     <!--Helper-->
     <string name="selanjutnya">Selanjutnya</string>
-    <string name="button_back">Button Back</string>
+    <string name="button_back">Kembali</string>
     <string name="logo_kaizen">Logo Kaizen</string>
     <string name="logo_google">Logo Google</string>
     <string name="tutup">Tutup</string>
@@ -37,6 +37,9 @@
     <string name="searchArticle">Cari Artikel…</string>
     <string name="lapor">Menu Lapor</string>
     <string name="curhat">Menu Curhat</string>
+
+    <!--Curhat-->
+    <string name="connect_TPPA">Chat ini terhubung dengan Tim TPPA</string>
 
     <!--Dummy Article-->
     <integer-array name="tempdata_article_image">
