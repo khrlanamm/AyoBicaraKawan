@@ -76,10 +76,6 @@ class HomeFragment : Fragment() {
         return root
     }
 
-    /**
-     * Menampilkan nama pengguna yang login ke TextView accountName.
-     * Mengambil 2 kata pertama jika nama lebih dari 2 kata dan membatasi 20 karakter.
-     */
     private fun displayUserName() {
         val sharedPreferences = requireContext().getSharedPreferences(SignInActivity.PREF_NAME, Context.MODE_PRIVATE)
         val fullName = sharedPreferences.getString(SignInActivity.KEY_USER_NAME, "Pengguna") ?: "Pengguna"
@@ -100,9 +96,6 @@ class HomeFragment : Fragment() {
         binding.accountName.text = "Halo, $finalName!"
     }
 
-    /**
-     * Menampilkan dialog konfirmasi logout.
-     */
     private fun showLogoutConfirmationDialog() {
         val sharedPreferences = requireContext().getSharedPreferences(SignInActivity.PREF_NAME, Context.MODE_PRIVATE)
         val userName = sharedPreferences.getString(SignInActivity.KEY_USER_NAME, "Pengguna") ?: "Pengguna"
@@ -129,9 +122,6 @@ class HomeFragment : Fragment() {
             .show()
     }
 
-    /**
-     * Menyiapkan callback untuk menangani penekanan tombol kembali.
-     */
     private fun setupOnBackPressedCallback() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
