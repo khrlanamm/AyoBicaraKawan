@@ -1,13 +1,15 @@
 package com.khrlanamm.ayobicarakawan.ui.report
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ReportViewModel(helloText: String) : ViewModel() {
+class ReportViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = helloText
+    init {
+
     }
-    val text: LiveData<String> = _text
+
+    override fun onCleared() {
+        super.onCleared()
+
+    }
 }
