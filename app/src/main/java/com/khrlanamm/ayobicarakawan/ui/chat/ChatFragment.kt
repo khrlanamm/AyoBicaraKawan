@@ -7,12 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.khrlanamm.ayobicarakawan.databinding.FragmentChatBinding
 
 class ChatFragment : Fragment() {
 
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var chatViewModel: ChatViewModel
+    private lateinit var chatAdapter: ChatAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,25 +26,48 @@ class ChatFragment : Fragment() {
         _binding = FragmentChatBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // Setup ViewModel
+        val factory = ChatViewModelFactory(requireActivity().application)
+        chatViewModel = ViewModelProvider(this, factory).get(ChatViewModel::class.java)
 
+        // Setup Toolbar
         binding.toolbar.setNavigationOnClickListener {
-            // Cara 1: Menggunakan NavController (jika Anda menggunakan Jetpack Navigation)
             findNavController().navigateUp()
-
-            // Cara 2: Menggunakan onBackPressedDispatcher (lebih umum jika tidak spesifik ke NavController)
-            // requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        // Setup RecyclerView
+        setupRecyclerView()
 
-        val factory = ChatViewModelFactory(requireContext())
-        val chatViewModel = ViewModelProvider(this, factory).get(ChatViewModel::class.java)
+        // Setup Send Button
+        binding.buttonSend.setOnClickListener {
+            val messageText = binding.editTextMessage.text.toString().trim()
+            if (messageText.isNotEmpty()) {
+                chatViewModel.sendMessage(messageText)
+                binding.editTextMessage.text.clear()
+            }
+        }
+
+        // Observe chat messages
+        chatViewModel.allMessages.observe(viewLifecycleOwner) { messages ->
+            chatAdapter.submitList(messages) {
+                // Scroll ke posisi terakhir setelah daftar diperbarui
+                if (messages.isNotEmpty()) {
+                    binding.recyclerViewChat.smoothScrollToPosition(messages.size - 1)
+                }
+            }
+        }
 
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    private fun setupRecyclerView() {
+        chatAdapter = ChatAdapter()
+        binding.recyclerViewChat.apply {
+            adapter = chatAdapter
+            layoutManager = LinearLayoutManager(context).apply {
+                stackFromEnd = true // Pesan baru muncul dari bawah dan scroll ke atas
+            }
+        }
     }
 
     override fun onDestroyView() {

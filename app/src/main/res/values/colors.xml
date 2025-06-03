@@ -10,4 +10,7 @@
     <color name="gray_light">#E0E0E0</color>
     <color name="indicator_active">#FFFFFF</color>
     <color name="indicator_inactive">#B0BEC5</color>
+
+    <color name="user_message_background">#AC44D9</color>
+    <color name="timestamp_color_user">#FFFFFF</color>
 </resources>
