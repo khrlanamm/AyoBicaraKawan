@@ -31,7 +31,6 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var progressBarLayout: RelativeLayout
 
     private lateinit var db: AppDatabase
-
     private lateinit var sharedPreferences: SharedPreferences
 
     companion object {
@@ -39,6 +38,18 @@ class SignInActivity : AppCompatActivity() {
         const val KEY_IS_LOGGED_IN = "is_logged_in"
         const val KEY_USER_NAME = "user_name"
         const val KEY_USER_EMAIL = "user_email"
+
+        /**
+         * Menghapus informasi sesi pengguna dari SharedPreferences (logout).
+         * @param context Konteks aplikasi untuk mengakses SharedPreferences.
+         */
+        fun clearUserSession(context: Context) {
+            val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+            prefs.edit().apply {
+                clear() // Hapus semua data dari SharedPreferences ini
+                apply()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +69,6 @@ class SignInActivity : AppCompatActivity() {
         progressBarLayout = findViewById(R.id.progressBar)
 
         db = AppDatabase.getDatabase(applicationContext)
-
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
         checkUserSession()
@@ -160,13 +170,6 @@ class SignInActivity : AppCompatActivity() {
             putBoolean(KEY_IS_LOGGED_IN, true)
             putString(KEY_USER_NAME, userName)
             putString(KEY_USER_EMAIL, userEmail)
-            apply()
-        }
-    }
-
-    fun clearUserSession() {
-        sharedPreferences.edit().apply {
-            clear()
             apply()
         }
     }
