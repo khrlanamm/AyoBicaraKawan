@@ -33,9 +33,9 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root = binding.root
 
-        // Tombol Account
-        binding.accountButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Sedang dalam pengembangan", Toast.LENGTH_SHORT).show()
+        // Tombol Logout
+        binding.logoutButton.setOnClickListener {
+            //perform logout
         }
 
 // Tombol Menu Lapor → navigasi ke ReportFragment

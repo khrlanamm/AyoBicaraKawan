@@ -31,22 +31,14 @@
     <!--Home-->
     <string name="account_name">Selamat Datang!</string>
     <string name="article_title">Edukasi</string>
-    <string name="article_description">Ayo baca artikel terkait Bullying dan Kekerasan</string>
-    <string name="account">Account</string>
+    <string name="article_description">Ayo baca artikel terkait Bullying di Sekolah</string>
+    <string name="account">Profil</string>
+    <string name="logout">Keluar</string>
     <string name="searchArticle">Cari Artikel…</string>
     <string name="lapor">Menu Lapor</string>
     <string name="curhat">Menu Curhat</string>
 
-    <string-array name="tempdata_article_title">
-        <item>Cara Efektif Membangun Kepercayaan Diri Korban Bullying</item>
-        <item>Memahami Bullying: Pengertian, Jenis, Dampak, dan Cara Mengatasinya</item>
-        <item>Psikologi Bullying: Mengapa Pelaku Melakukan Tindakan Ini?</item>
-        <item>Bullying di Sekolah: Identifikasi, Pencegahan, dan Solusinya</item>
-        <item>5 Langkah Praktis Menghadapi Bullying di Lingkungan Sekolah</item>
-        <item>Stop Bullying! Ini Cara Melawan Tanpa Kekerasan</item>
-        <item>Dampak Jangka Panjang Bullying pada Kesehatan Mental</item>
-    </string-array>
-
+    <!--Dummy Article-->
     <integer-array name="tempdata_article_image">
         <item>@drawable/tempdata_article_image1</item>
         <item>@drawable/tempdata_article_image2</item>
@@ -57,24 +49,34 @@
         <item>@drawable/tempdata_article_image7</item>
     </integer-array>
 
+    <string-array name="tempdata_article_title">
+        <item>Bullying Bukan Tindakan Terpuji: Mencegah Bullying di Sekolah</item>
+        <item>Bullying di Sekolah: Pengertian, Jenis, dan Ciri Pelakunya</item>
+        <item>Jangan Lagi Diam, Bullying Itu Bukan Hal Biasa</item>
+        <item>Korban Bullying? Jangan Takut Melapor, Sekarang Pelaporan Jadi Lebih Mudah!</item>
+        <item>Jeratan Gelap Bullying di Dunia Pendidikan Indonesia</item>
+        <item>Berani Melapor Kasus Bullying</item>
+        <item>Simpan Bukti Digital, Korban Bullying Harus Berani Lapor</item>
+    </string-array>
+
     <string-array name="tempdata_article_description">
-        <item>Korban bullying sering mengalami penurunan kepercayaan diri yang drastis. Menurut penelitian, 85% korban bullying melaporkan penurunan harga diri. Artikel ini membahas strategi praktis untuk membangun kembali kepercayaan diri setelah mengalami trauma bullying.</item>
-        <item>Bullying adalah masalah serius yang memengaruhi jutaan anak dan remaja setiap tahunnya. Data UNESCO menunjukkan 1 dari 3 siswa mengalami bullying di sekolah. Mari kita pahami lebih dalam tentang fenomena ini dan cara efektif untuk melawannya.</item>
-        <item>Apa yang sebenarnya mendorong seseorang menjadi pelaku bullying? Artikel ini mengupas tuntas motif psikologis di balik perilaku bullying, dari kebutuhan akan kekuasaan hingga pengaruh lingkungan keluarga.</item>
-        <item>Sekolah seharusnya menjadi tempat yang aman, namun seringkali justru menjadi sumber trauma bagi korban bullying. Simak panduan lengkap untuk guru, orang tua, dan siswa dalam menciptakan lingkungan sekolah yang bebas bullying.</item>
-        <item>Menghadapi bullying tidak harus dengan kekerasan. Temukan 5 strategi praktis yang telah terbukti efektif berdasarkan penelitian terbaru untuk menghadapi bullying di lingkungan sekolah sehari-hari.</item>
-        <item>Bullying bisa dilawan tanpa menjadi pelaku kekerasan juga. Artikel ini mengajarkan teknik asertif dan komunikasi efektif untuk menghentikan bullying sekaligus menjaga martabat diri.</item>
-        <item>Dampak bullying tidak berhenti saat masa sekolah usai. Studi longitudinal menunjukkan korban bullying berisiko 2 kali lebih tinggi mengalami gangguan kecemasan dan depresi di masa dewasa. Pahami dampak jangka panjang dan cara meminimalkannya.</item>
+        <item>Perundungan adalah masalah serius yang dapat mempengaruhi kehidupan anak dan remaja di sekolah. Penting untuk memahami dampak negatifnya dan cara mencegahnya agar sekolah menjadi tempat yang aman.</item>
+        <item>Bullying merupakan salah satu dari tiga dosa besar di dunia pendidikan dan dapat menimbulkan kerugian bagi korban. Pemerintah mengambil langkah serius dalam penanganannya di sekolah.</item>
+        <item>Maraknya kasus perundungan menandakan kurangnya sistem perlindungan efektif. Semua pihak perlu bekerja sama menanamkan nilai toleransi, empati, dan keberanian melawan ketidakadilan.</item>
+        <item>Perkembangan teknologi mempermudah berbagai aspek kehidupan, termasuk layanan publik seperti sistem pelaporan kasus bullying yang kini lebih mudah diakses masyarakat.</item>
+        <item>Perilaku bullying masih membayangi pelajar Indonesia. Pendidikan dari keluarga harus digalakkan untuk membebaskan institusi pendidikan dari belenggu bullying yang merenggut rasa aman.</item>
+        <item>Bullying adalah segala bentuk penindasan atau kekerasan yang dilakukan dengan sengaja oleh satu orang atau kelompok yang lebih kuat dengan tujuan menyakiti dan dilakukan secara terus menerus.</item>
+        <item>Perundungan di dunia digital adalah perilaku agresif menggunakan media elektronik secara berulang terhadap korban yang dianggap tidak mudah melakukan perlawanan. Penting untuk menyimpan bukti digital.</item>
     </string-array>
 
     <string-array name="tempdata_article_url">
-        <item>https://www.kompasiana.com/psikologi/artikel-cara-membangun-kepercayaan-diri-korban-bullying</item>
-        <item>https://www.unicef.org/indonesia/id/bullying-pengertian-dan-cara-mengatasi</item>
-        <item>https://www.psychologytoday.com/bullying-psychology</item>
-        <item>https://www.kemdikbud.go.id/pencegahan-bullying-di-sekolah</item>
-        <item>https://www.healthline.com/cara-menghadapi-bullying</item>
-        <item>https://www.stopbullying.gov/melawan-tanpa-kekerasan</item>
-        <item>https://www.ncbi.nlm.nih.gov/dampak-jangka-panjang-bullying</item>
+        <item>https://ditsmp.kemendikdasmen.go.id/ragam-informasi/article/bullying-bukan-tindakan-terpuji-mencegah-bullying-di-sekolah</item>
+        <item>https://www.detik.com/edu/detikpedia/d-7463301/bullying-di-sekolah-pengertian-jenis-dan-ciri-pelakunya</item>
+        <item>https://www.kompasiana.com/nurhikmah2246/683f0eb2ed64156c3909caa2/jangan-lagi-diam-bullying-itu-bukan-hal-biasa</item>
+        <item>https://kumparan.com/khanif-yunan-pratama/korban-bullying-jangan-takut-melapor-sekarang-pelaporan-jadi-lebih-mudah-23qIITBWC6Y</item>
+        <item>https://www.ums.ac.id/berita/perspektif/jeratan-gelap-bullying-di-dunia-pendidikan-indonesia</item>
+        <item>https://radarsemarang.jawapos.com/opini/721390319/berani-melapor-kasus-bullying</item>
+        <item>https://infojateng.id/read/13752/simpan-bukti-digital-korban-bullying-harus-berani-lapor/</item>
     </string-array>
     <!--    data dummy article-->
 
