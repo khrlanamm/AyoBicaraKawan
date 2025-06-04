@@ -53,6 +53,8 @@
     <string name="label_unggah_bukti">Unggah Gambar Pendukung</string>
     <string name="button_pilih_berkas">Pilih Gambar</string>
     <string name="button_kirim_laporan">Kirim Laporan</string>
+    <string name="label_gambar_telah_diunggah_custom">Gambar pendukung telah diunggah</string>
+    <string name="button_berkas_terpilih_custom">Berkas telah dipilih</string>
 
     <!--Dummy Article-->
     <integer-array name="tempdata_article_image">
