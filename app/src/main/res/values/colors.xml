@@ -18,4 +18,8 @@
     <color name="card_background">#FFFFFF</color>
     <color name="form_hint_color">#4A4848</color>
     <color name="button_text_color">#6D3088</color>
+
+    <color name="reporter_type_victim_background">#FF6200EE</color>
+    <color name="reporter_type_witness_background">#FF03DAC5</color>
+    <color name="default_grey">#BDBDBD</color>
 </resources>

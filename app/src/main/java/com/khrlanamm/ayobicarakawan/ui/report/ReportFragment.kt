@@ -1,6 +1,5 @@
 package com.khrlanamm.ayobicarakawan.ui.report
 
-// Ensure this is the correct path and definition for your ReportEntity
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -71,13 +70,13 @@ class ReportFragment : Fragment() {
                         Handler(Looper.getMainLooper()).postDelayed({
                             reportViewModel.setImageUploading(false)
                             binding.tvUploadLabel.text =
-                                getString(R.string.label_gambar_telah_diunggah_custom)
+                                getString(R.string.label_gambar_telah_diunggah_custom) // Make sure this string exists
                             binding.btnSelectFile.text =
-                                fileName ?: getString(R.string.button_berkas_terpilih_custom)
+                                fileName ?: getString(R.string.button_berkas_terpilih_custom) // Make sure this string exists
                             binding.btnSelectFile.setTextColor(Color.BLACK)
                             binding.btnSelectFile.background = ContextCompat.getDrawable(
                                 requireContext(),
-                                R.drawable.button_background_greyed_out
+                                R.drawable.button_background_greyed_out // Make sure this drawable exists
                             )
                         }, 2000) // 2 seconds delay
                     }
@@ -113,8 +112,6 @@ class ReportFragment : Fragment() {
 
     private fun setupUIListeners() {
         binding.toolbar.setNavigationOnClickListener {
-            // Consider using NavController if you are using Navigation Component
-            // requireActivity().findNavController(R.id.nav_host_fragment_content_main).popBackStack()
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
@@ -127,41 +124,54 @@ class ReportFragment : Fragment() {
         }
 
         binding.btnSubmitReport.setOnClickListener {
-            submitReport()
+            submitReport() // This will now trigger the flow including the new delay on success
         }
     }
 
     private fun observeViewModel() {
         reportViewModel.selectedImageFileName.observe(viewLifecycleOwner) { fileName ->
             // This observer can be used if you need to react to filename changes elsewhere
-            // For now, the direct update in imagePickerLauncher callback is sufficient for button text
         }
 
         reportViewModel.isImageUploading.observe(viewLifecycleOwner) { isUploading ->
-            binding.progressBarContainer.visibility = if (isUploading) View.VISIBLE else View.GONE
+            // This progress bar is for the image "upload" simulation.
+            // If you want the main progressBarContainer to also show for this, you'll need to manage its visibility here too.
+            // For now, it's separate.
+            if (isUploading) {
+                binding.progressBarContainer.visibility = View.VISIBLE
+            } else {
+                // Only hide if not in report submission loading state
+                if (reportViewModel.reportSubmissionStatus.value !is SubmissionStatus.LOADING) {
+                    binding.progressBarContainer.visibility = View.GONE
+                }
+            }
         }
 
         reportViewModel.reportSubmissionStatus.observe(viewLifecycleOwner) { status ->
             when (status) {
                 is SubmissionStatus.LOADING -> {
-                    binding.progressBarContainer.visibility =
-                        View.VISIBLE // Show general progress for submission
+                    binding.progressBarContainer.visibility = View.VISIBLE
                     binding.btnSubmitReport.isEnabled = false
                 }
 
                 is SubmissionStatus.SUCCESS -> {
-                    binding.progressBarContainer.visibility = View.GONE
-                    binding.btnSubmitReport.isEnabled = true
-                    // Show AlertDialog instead of Toast
-                    showSuccessDialog()
-                    // clearForm() and resetSubmissionStatus() will be called after dialog dismissal
+                    // Show progress bar for 2 seconds BEFORE showing the success dialog
+                    binding.progressBarContainer.visibility = View.VISIBLE
+                    binding.btnSubmitReport.isEnabled = false // Keep button disabled during this phase
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        binding.progressBarContainer.visibility = View.GONE
+                        binding.btnSubmitReport.isEnabled = true // Re-enable before showing dialog or after, depending on desired UX
+                        showSuccessDialog()
+                        // clearForm() and resetSubmissionStatus() are called after dialog dismissal
+                    }, 2000) // 2 seconds delay
                 }
 
                 is SubmissionStatus.ERROR -> {
                     binding.progressBarContainer.visibility = View.GONE
                     binding.btnSubmitReport.isEnabled = true
                     Toast.makeText(context, "Error: ${status.message}", Toast.LENGTH_LONG).show()
-                    reportViewModel.resetSubmissionStatus() // Reset status after handling
+                    reportViewModel.resetSubmissionStatus()
                 }
 
                 SubmissionStatus.IDLE -> {
@@ -174,12 +184,12 @@ class ReportFragment : Fragment() {
 
     private fun showSuccessDialog() {
         AlertDialog.Builder(requireContext())
-            .setIcon(R.drawable.abk_logo)
+            .setIcon(R.drawable.abk_logo) // Make sure abk_logo exists
             .setTitle("Berhasil")
             .setMessage("Terima Kasih telah berani melapor. Data Laporan Berhasil diunggah, kami akan membantu anda semaksimal mungkin, mohon bersabar.")
             .setPositiveButton("OK") { dialog, _ ->
                 clearForm()
-                reportViewModel.resetSubmissionStatus() // Reset status after handling
+                reportViewModel.resetSubmissionStatus()
                 dialog.dismiss()
             }
             .setCancelable(false)
@@ -193,29 +203,25 @@ class ReportFragment : Fragment() {
             { _, year, month, dayOfMonth ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)
-                // Using "id" for Indonesian locale
-                val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+                val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")) // Corrected pattern
                 binding.etIncidentDate.setText(dateFormat.format(selectedDate.time))
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
         )
-        datePickerDialog.datePicker.maxDate =
-            System.currentTimeMillis() // Optional: Prevent future dates
+        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
         datePickerDialog.show()
     }
 
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-            type = "image/*" // Standard MIME type for images
+            type = "image/*"
         }
-        // Check if there's an app to handle this intent
         if (intent.resolveActivity(requireActivity().packageManager) != null) {
             imagePickerLauncher.launch(intent)
         } else {
-            Toast.makeText(context, "Tidak ada aplikasi galeri ditemukan", Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(context, "Tidak ada aplikasi galeri ditemukan", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -224,19 +230,16 @@ class ReportFragment : Fragment() {
 
         if (binding.rgReporterType.checkedRadioButtonId == -1) {
             Toast.makeText(context, "Pilih jenis pelapor (Korban/Saksi)", Toast.LENGTH_SHORT).show()
-            // Consider focusing on the RadioGroup or showing an error near it
             isValid = false
         }
         if (binding.etReporterName.text.isNullOrBlank()) {
             binding.etReporterName.error = "Nama pelapor tidak boleh kosong"
-            if (isValid) binding.etReporterName.requestFocus() // Request focus on the first error
+            if (isValid) binding.etReporterName.requestFocus()
             isValid = false
         }
         if (binding.etIncidentDate.text.isNullOrBlank()) {
-            // Setting error on EditText might not be visible if it's not focusable. Toast is good.
-            Toast.makeText(context, "Tanggal kejadian tidak boleh kosong", Toast.LENGTH_SHORT)
-                .show()
-            if (isValid) binding.etIncidentDate.requestFocus() // May not work if not focusable, but good practice
+            Toast.makeText(context, "Tanggal kejadian tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            // No requestFocus() here as etIncidentDate is not directly editable
             isValid = false
         }
         if (binding.etIncidentPlace.text.isNullOrBlank()) {
@@ -253,9 +256,7 @@ class ReportFragment : Fragment() {
             binding.etContactNumber.error = "Nomor kontak tidak boleh kosong"
             if (isValid) binding.etContactNumber.requestFocus()
             isValid = false
-        } else if (!android.util.Patterns.PHONE.matcher(binding.etContactNumber.text.toString())
-                .matches()
-        ) {
+        } else if (!android.util.Patterns.PHONE.matcher(binding.etContactNumber.text.toString()).matches()) {
             binding.etContactNumber.error = "Format nomor kontak tidak valid"
             if (isValid) binding.etContactNumber.requestFocus()
             isValid = false
@@ -263,7 +264,6 @@ class ReportFragment : Fragment() {
 
         if (reportViewModel.selectedImageFileName.value == null) {
             Toast.makeText(context, "Unggah gambar/bukti pendukung", Toast.LENGTH_SHORT).show()
-            // Consider highlighting the "Select File" button or the label
             isValid = false
         }
 
@@ -272,10 +272,12 @@ class ReportFragment : Fragment() {
 
     private fun submitReport() {
         if (!validateInputs()) {
+            reportViewModel.setImageUploading(false) // Ensure image upload simulation is also stopped
+            binding.progressBarContainer.visibility = View.GONE
+            binding.btnSubmitReport.isEnabled = true
             return
         }
 
-        // All fields should be validated by now
         val reporterType =
             if (binding.rbVictim.isChecked) getString(R.string.radio_korban) else getString(R.string.radio_saksi)
         val reporterName = binding.etReporterName.text.toString()
@@ -283,7 +285,6 @@ class ReportFragment : Fragment() {
         val incidentPlace = binding.etIncidentPlace.text.toString()
         val incidentDescription = binding.etIncidentDescription.text.toString()
         val contactNumber = binding.etContactNumber.text.toString()
-        // imageFileName can be null if the ReportEntity allows it (e.g., imageFileName: String?)
         val imageFileName = reportViewModel.selectedImageFileName.value
 
         val report = ReportEntity(
@@ -293,7 +294,7 @@ class ReportFragment : Fragment() {
             incidentPlace = incidentPlace,
             incidentDescription = incidentDescription,
             contactNumber = contactNumber,
-            imageFileName = imageFileName, // This will be null if no image was selected
+            imageFileName = imageFileName,
             submissionTimestamp = System.currentTimeMillis()
         )
 
@@ -303,40 +304,35 @@ class ReportFragment : Fragment() {
     private fun clearForm() {
         binding.rgReporterType.clearCheck()
         binding.etReporterName.text.clear()
-        binding.etIncidentDate.text.clear()
+        binding.etIncidentDate.text.clear() // Also clear the text for etIncidentDate
         binding.etIncidentPlace.text.clear()
         binding.etIncidentDescription.text.clear()
         binding.etContactNumber.text.clear()
 
-        // Clear errors from EditTexts
         binding.etReporterName.error = null
-        binding.etIncidentDate.error = null
+        // binding.etIncidentDate.error = null // Not needed as it's not an error field
         binding.etIncidentPlace.error = null
         binding.etIncidentDescription.error = null
         binding.etContactNumber.error = null
 
-
-        // Reset image selection UI
-        binding.tvUploadLabel.text = getString(R.string.label_unggah_bukti)
-        binding.btnSelectFile.text = getString(R.string.button_pilih_berkas)
-        // Reset text color using the color resource
+        binding.tvUploadLabel.text = getString(R.string.label_unggah_bukti) // Make sure this string exists
+        binding.btnSelectFile.text = getString(R.string.button_pilih_berkas) // Make sure this string exists
         binding.btnSelectFile.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.button_text_color
+                R.color.button_text_color // Make sure this color exists
             )
         )
-        // Reset background using the original drawable resource
         binding.btnSelectFile.background =
-            ContextCompat.getDrawable(requireContext(), R.drawable.button_background_light_purple)
+            ContextCompat.getDrawable(requireContext(), R.drawable.button_background_light_purple) // Make sure this drawable exists
 
         selectedImageUri = null
-        reportViewModel.setSelectedImageFileName(null) // Clear in ViewModel as well
+        reportViewModel.setSelectedImageFileName(null)
+        reportViewModel.setImageUploading(false) // Ensure this is reset
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Important to prevent memory leaks
+        _binding = null
     }
 }

@@ -57,6 +57,11 @@
     <string name="button_berkas_terpilih_custom">Berkas telah dipilih</string>
     <string name="desc_report_image">Gambar pendukung</string>
 
+    <!--History Laporan-->
+    <string name="no_report_data_message">Belum ada Data Laporan</string>
+    <string name="incident_date_prefix">Kejadian: %1$s</string>
+    <string name="status_terkirim">Terkirim</string>
+
     <!--Dummy Article-->
     <integer-array name="tempdata_article_image">
         <item>@drawable/tempdata_article_image1</item>
