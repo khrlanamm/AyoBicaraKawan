@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pilih Sumber Gambar"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:paddingBottom="16dp"/>
+
+    <Button
+        android:id="@+id/buttonCamera"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Buka Kamera"
+        android:textColor="@color/purple_abk"
+        android:gravity="start|center_vertical"
+        android:paddingVertical="12dp"/>
+
+    <Button
+        android:id="@+id/buttonGallery"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pilih dari Galeri"
+        android:textColor="@color/purple_abk"
+        android:gravity="start|center_vertical"
+        android:paddingVertical="12dp"/>
+
+</LinearLayout>
+    
