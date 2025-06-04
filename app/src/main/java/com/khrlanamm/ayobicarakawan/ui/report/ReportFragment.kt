@@ -182,6 +182,7 @@ class ReportFragment : Fragment() {
                 reportViewModel.resetSubmissionStatus() // Reset status after handling
                 dialog.dismiss()
             }
+            .setCancelable(false)
             .show()
     }
 

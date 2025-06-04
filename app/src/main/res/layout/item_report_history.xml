@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/iv_report_image"
+            android:layout_width="77dp"
+            android:layout_height="86dp"
+            android:background="@drawable/bg_image_placeholder"
+            android:contentDescription="@string/desc_report_image"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <!-- TextView untuk Nama -->
+        <TextView
+            android:id="@+id/tv_report_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/iv_report_image"
+            app:layout_constraintTop_toTopOf="@id/iv_report_image"
+            app:layout_constraintEnd_toStartOf="@id/tv_report_status"
+            android:layout_marginEnd="8dp"
+            tools:text="Nama Pelapor/Korban" />
+
+        <!-- TextView untuk Tanggal Insiden -->
+        <TextView
+            android:id="@+id/tv_incident_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toStartOf="@id/tv_report_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_report_name"
+            app:layout_constraintEnd_toEndOf="@id/tv_report_name"
+            tools:text="Kejadian: 01 Jan 2024" />
+
+        <!-- TextView untuk Deskripsi -->
+
+        <!-- TextView untuk Status Laporan -->
+
+        <TextView
+            android:id="@+id/tv_report_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toTopOf="@id/tv_reporter_type"
+            app:layout_constraintEnd_toEndOf="@id/tv_incident_date"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/tv_incident_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_incident_date"
+            app:layout_constraintVertical_bias="0.029"
+            tools:text="Deskripsi singkat mengenai insiden yang dilaporkan, maksimum dua baris kemudian akan ada titik-titik..." />
+
+        <TextView
+            android:id="@+id/tv_report_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_report_name"
+            tools:text="Terkirim"
+            tools:backgroundTint="@android:color/holo_blue_light"
+            android:background="@drawable/bg_status_rounded"/>
+
+        <TextView
+            android:id="@+id/tv_reporter_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_reporter_type_rounded"
+            android:paddingStart="8dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="2dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_report_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:backgroundTint="@android:color/holo_purple"
+            tools:text="Saksi" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
