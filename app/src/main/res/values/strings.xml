@@ -41,6 +41,19 @@
     <!--Curhat-->
     <string name="connect_TPPA">Chat ini terhubung dengan Tim TPPA</string>
 
+    <!--Lapor-->
+    <string name="form_title_pelaporan">Formulir Pelaporan Tindak Kekerasan</string>
+    <string name="radio_korban">Korban</string>
+    <string name="radio_saksi">Saksi</string>
+    <string name="hint_nama_pelapor">Nama Pelapor</string>
+    <string name="hint_tanggal_kejadian">Tanggal Kejadian</string>
+    <string name="hint_deskripsi_kejadian">Deskripsi Kejadian</string>
+    <string name="hint_tempat_kejadian">Tempat Kejadian</string>
+    <string name="hint_nomor_kontak">Nomor yang bisa dihubungi</string>
+    <string name="label_unggah_bukti">Unggah Gambar Pendukung</string>
+    <string name="button_pilih_berkas">Pilih Gambar</string>
+    <string name="button_kirim_laporan">Kirim Laporan</string>
+
     <!--Dummy Article-->
     <integer-array name="tempdata_article_image">
         <item>@drawable/tempdata_article_image1</item>

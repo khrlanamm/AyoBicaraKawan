@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/chatFragment"
+    android:id="@+id/reportFragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_abk"
+    android:paddingTop="32dp"
     tools:context=".ui.report.ReportFragment">
 
     <!-- Toolbar -->
@@ -13,14 +14,227 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
+        android:background="@color/background_abk"
         android:elevation="4dp"
-        app:title="@string/title_report"
-        app:titleTextColor="@color/black"
-        app:navigationIcon="@drawable/icon_back"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:contentInsetStart="0dp"
-        app:contentInsetStartWithNavigation="0dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/icon_back"
+        app:title="@string/title_report"
+        app:titleTextColor="@color/black" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/btnSubmitReport"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <!-- FrameLayout ini menggantikan LinearLayout sebelumnya untuk memungkinkan overlay -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- CardView yang berisi form -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/formCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:contentPadding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Judul Form -->
+                    <TextView
+                        android:id="@+id/tvFormTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/form_title_pelaporan"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="@color/purple_abk_dark"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <!-- RadioButton Korban/Saksi -->
+                    <RadioGroup
+                        android:id="@+id/rgReporterType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbVictim"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/purple_abk"
+                            android:text="@string/radio_korban"
+                            android:textColor="@color/form_text_color"
+                            android:textSize="14sp" />
+
+                        <RadioButton
+                            android:id="@+id/rbWitness"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:buttonTint="@color/purple_abk"
+                            android:text="@string/radio_saksi"
+                            android:textColor="@color/form_text_color"
+                            android:textSize="14sp" />
+                    </RadioGroup>
+
+                    <!-- Nama Pelapor -->
+                    <EditText
+                        android:id="@+id/etReporterName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/edittext_form_background"
+                        android:hint="@string/hint_nama_pelapor"
+                        android:inputType="textCapWords"
+                        android:textColor="@color/form_text_color"
+                        android:textColorHint="@color/form_hint_color"
+                        android:textSize="16sp" />
+
+                    <!-- Tanggal Kejadian -->
+                    <EditText
+                        android:id="@+id/etIncidentDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/edittext_form_background"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="@string/hint_tanggal_kejadian"
+                        android:inputType="date"
+                        android:textColor="@color/form_text_color"
+                        android:textColorHint="@color/form_hint_color"
+                        android:textSize="16sp" />
+
+                    <!-- Tempat Kejadian -->
+                    <EditText
+                        android:id="@+id/etIncidentPlace"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/edittext_form_background"
+                        android:hint="@string/hint_tempat_kejadian"
+                        android:inputType="textCapSentences"
+                        android:textColor="@color/form_text_color"
+                        android:textColorHint="@color/form_hint_color"
+                        android:textSize="16sp" />
+
+                    <!-- Deskripsi Kejadian -->
+                    <EditText
+                        android:id="@+id/etIncidentDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/edittext_form_background"
+                        android:gravity="top|start"
+                        android:hint="@string/hint_deskripsi_kejadian"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:minLines="4"
+                        android:textColor="@color/form_text_color"
+                        android:textColorHint="@color/form_hint_color"
+                        android:textSize="16sp" />
+
+                    <!-- Nomor yang bisa dihubungi -->
+                    <EditText
+                        android:id="@+id/etContactNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/edittext_form_background"
+                        android:hint="@string/hint_nomor_kontak"
+                        android:inputType="phone"
+                        android:textColor="@color/form_text_color"
+                        android:textColorHint="@color/form_hint_color"
+                        android:textSize="16sp" />
+
+                    <!-- Unggah Gambar/Bukti -->
+                    <TextView
+                        android:id="@+id/tvUploadLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/label_unggah_bukti"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        android:textColor="@color/form_hint_color"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnSelectFile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_background_light_purple"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="24dp"
+                        android:text="@string/button_pilih_berkas"
+                        android:textColor="@color/button_text_color" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <FrameLayout
+                android:id="@+id/progressBarContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#80FFFFFF"
+                android:elevation="10dp"
+                android:visibility="invisible"
+                tools:visibility="visible">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/purple_abk" />
+            </FrameLayout>
+
+        </FrameLayout>
+    </ScrollView>
+
+    <!-- Tombol Kirim Laporan -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSubmitReport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/button_background_dark_purple"
+        android:drawableEnd="@drawable/ic_send"
+        android:drawableTint="@color/white"
+        android:paddingStart="24dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:text="@string/button_kirim_laporan"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

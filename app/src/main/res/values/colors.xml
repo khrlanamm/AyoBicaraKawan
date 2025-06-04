@@ -13,4 +13,9 @@
 
     <color name="user_message_background">#AC44D9</color>
     <color name="timestamp_color_user">#FFFFFF</color>
+    <color name="form_text_color">#535353</color>
+
+    <color name="card_background">#FFFFFF</color>
+    <color name="form_hint_color">#4A4848</color>
+    <color name="button_text_color">#6D3088</color>
 </resources>
