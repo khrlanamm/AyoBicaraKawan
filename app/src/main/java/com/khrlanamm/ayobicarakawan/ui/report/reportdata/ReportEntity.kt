@@ -13,6 +13,6 @@ data class ReportEntity(
     val incidentPlace: String,
     val incidentDescription: String,
     val contactNumber: String,
-    val imageFileName: String?,
+    val imageUriString: String?,
     val submissionTimestamp: Long
 )

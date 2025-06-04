@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-
-@Database(entities = [ReportEntity::class], version = 1, exportSchema = false)
+// Naikkan versi database menjadi 2
+@Database(entities = [ReportEntity::class], version = 2, exportSchema = false)
 abstract class ReportDatabase : RoomDatabase() {
 
     abstract fun reportDao(): ReportDao
@@ -22,6 +22,7 @@ abstract class ReportDatabase : RoomDatabase() {
                     ReportDatabase::class.java,
                     "ayobicarakawan_report_database"
                 )
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance

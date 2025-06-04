@@ -2,6 +2,7 @@ package com.khrlanamm.ayobicarakawan.ui.report
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Context // Import Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -9,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.OpenableColumns
+import android.util.Log // Import Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +24,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.khrlanamm.ayobicarakawan.R
 import com.khrlanamm.ayobicarakawan.databinding.FragmentReportBinding
 import com.khrlanamm.ayobicarakawan.ui.report.reportdata.ReportEntity
+import java.io.File // Import File
+import java.io.FileOutputStream // Import FileOutputStream
+import java.io.InputStream // Import InputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.UUID // Import UUID
 
 class ReportFragment : Fragment() {
 
@@ -32,7 +38,8 @@ class ReportFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var reportViewModel: ReportViewModel
-    private var selectedImageUri: Uri? = null // To hold the URI temporarily
+    private var selectedImageUri: Uri? = null // Tetap untuk URI sementara
+    private var persistedImageUriString: String? = null // Untuk menyimpan URI yang sudah di-persist atau path file internal
 
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
@@ -44,7 +51,6 @@ class ReportFragment : Fragment() {
         _binding = FragmentReportBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Initialize ViewModel
         val application = requireActivity().application
         val factory = ReportViewModelFactory(application)
         reportViewModel = ViewModelProvider(this, factory).get(ReportViewModel::class.java)
@@ -61,32 +67,80 @@ class ReportFragment : Fragment() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     result.data?.data?.let { uri ->
-                        selectedImageUri = uri // Store URI
+                        selectedImageUri = uri // Simpan URI asli untuk sementara
                         val fileName = getFileName(uri)
-                        reportViewModel.setSelectedImageFileName(fileName) // Update ViewModel
 
-                        // Simulate upload
-                        reportViewModel.setImageUploading(true)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            reportViewModel.setImageUploading(false)
-                            binding.tvUploadLabel.text =
-                                getString(R.string.label_gambar_telah_diunggah_custom) // Make sure this string exists
-                            binding.btnSelectFile.text =
-                                fileName ?: getString(R.string.button_berkas_terpilih_custom) // Make sure this string exists
-                            binding.btnSelectFile.setTextColor(Color.BLACK)
-                            binding.btnSelectFile.background = ContextCompat.getDrawable(
-                                requireContext(),
-                                R.drawable.button_background_greyed_out // Make sure this drawable exists
+                        // Ambil persistable URI permission
+                        try {
+                            val contentResolver = requireActivity().contentResolver
+                            contentResolver.takePersistableUriPermission(
+                                uri,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION
                             )
-                        }, 2000) // 2 seconds delay
+                            persistedImageUriString = uri.toString() // Simpan URI sebagai String
+                            reportViewModel.setSelectedImageUriString(persistedImageUriString) // Update ViewModel dengan URI String
+                            Log.d("ReportFragment", "Persisted URI: $persistedImageUriString")
+
+                            // Update UI seperti sebelumnya
+                            reportViewModel.setImageUploading(true)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                reportViewModel.setImageUploading(false)
+                                binding.tvUploadLabel.text =
+                                    getString(R.string.label_gambar_telah_diunggah_custom)
+                                binding.btnSelectFile.text =
+                                    fileName ?: getString(R.string.button_berkas_terpilih_custom)
+                                binding.btnSelectFile.setTextColor(Color.BLACK)
+                                binding.btnSelectFile.background = ContextCompat.getDrawable(
+                                    requireContext(),
+                                    R.drawable.button_background_greyed_out
+                                )
+                            }, 1000) // Kurangi delay jika perlu
+
+                        } catch (e: SecurityException) {
+                            Log.e("ReportFragment", "Failed to take persistable URI permission or copy file", e)
+                            Toast.makeText(context, "Gagal mengakses gambar. Coba gambar lain.", Toast.LENGTH_LONG).show()
+                            // Alternatif: Salin gambar ke penyimpanan internal aplikasi jika persistable permission gagal
+                            copyImageToInternalStorage(uri)?.let { internalPath ->
+                                persistedImageUriString = internalPath
+                                reportViewModel.setSelectedImageUriString(persistedImageUriString)
+                                Log.d("ReportFragment", "Copied to internal storage: $persistedImageUriString")
+                                // Lanjutkan update UI
+                                reportViewModel.setImageUploading(true)
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    reportViewModel.setImageUploading(false)
+                                    binding.tvUploadLabel.text = getString(R.string.label_gambar_telah_diunggah_custom)
+                                    binding.btnSelectFile.text = fileName ?: getString(R.string.button_berkas_terpilih_custom)
+                                    // ... (UI updates lainnya)
+                                }, 1000)
+                            } ?: run {
+                                Toast.makeText(context, "Gagal menyimpan gambar.", Toast.LENGTH_LONG).show()
+                            }
+                        }
                     }
                 }
             }
     }
 
+    // Fungsi untuk menyalin gambar ke penyimpanan internal aplikasi (opsional, sebagai fallback)
+    private fun copyImageToInternalStorage(uri: Uri): String? {
+        return try {
+            val inputStream: InputStream? = requireContext().contentResolver.openInputStream(uri)
+            val fileName = "IMG_${UUID.randomUUID()}.jpg" // Nama file unik
+            val file = File(requireContext().filesDir, fileName) // Simpan di direktori filesDir internal
+            val outputStream = FileOutputStream(file)
+            inputStream?.copyTo(outputStream)
+            inputStream?.close()
+            outputStream.close()
+            Uri.fromFile(file).toString() // Kembalikan URI dari file yang disalin
+        } catch (e: Exception) {
+            Log.e("ReportFragment", "Error copying file to internal storage", e)
+            null
+        }
+    }
+
+
     private fun getFileName(uri: Uri): String? {
         var fileName: String? = null
-        // Try to get the display name from the content resolver
         if (uri.scheme == "content") {
             val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
             cursor?.use {
@@ -98,7 +152,6 @@ class ReportFragment : Fragment() {
                 }
             }
         }
-        // If the display name is not available, try to get it from the path
         if (fileName == null) {
             fileName = uri.path
             val cut = fileName?.lastIndexOf('/')
@@ -124,23 +177,34 @@ class ReportFragment : Fragment() {
         }
 
         binding.btnSubmitReport.setOnClickListener {
-            submitReport() // This will now trigger the flow including the new delay on success
+            submitReport()
         }
     }
 
     private fun observeViewModel() {
-        reportViewModel.selectedImageFileName.observe(viewLifecycleOwner) { fileName ->
-            // This observer can be used if you need to react to filename changes elsewhere
+        // Ganti observer untuk imageFileName menjadi imageUriString jika ada
+        reportViewModel.selectedImageUriString.observe(viewLifecycleOwner) { uriString ->
+            // Anda bisa bereaksi terhadap perubahan URI di sini jika perlu
+            if (uriString == null && _binding != null) { // Cek _binding untuk menghindari crash saat view dihancurkan
+                // Reset tampilan tombol pilih file jika URI null (misalnya setelah form dibersihkan)
+                binding.tvUploadLabel.text = getString(R.string.label_unggah_bukti)
+                binding.btnSelectFile.text = getString(R.string.button_pilih_berkas)
+                binding.btnSelectFile.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.button_text_color
+                    )
+                )
+                binding.btnSelectFile.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.button_background_light_purple)
+            }
         }
 
         reportViewModel.isImageUploading.observe(viewLifecycleOwner) { isUploading ->
-            // This progress bar is for the image "upload" simulation.
-            // If you want the main progressBarContainer to also show for this, you'll need to manage its visibility here too.
-            // For now, it's separate.
+            if (_binding == null) return@observe // Cek null untuk binding
             if (isUploading) {
                 binding.progressBarContainer.visibility = View.VISIBLE
             } else {
-                // Only hide if not in report submission loading state
                 if (reportViewModel.reportSubmissionStatus.value !is SubmissionStatus.LOADING) {
                     binding.progressBarContainer.visibility = View.GONE
                 }
@@ -148,6 +212,7 @@ class ReportFragment : Fragment() {
         }
 
         reportViewModel.reportSubmissionStatus.observe(viewLifecycleOwner) { status ->
+            if (_binding == null) return@observe // Cek null untuk binding
             when (status) {
                 is SubmissionStatus.LOADING -> {
                     binding.progressBarContainer.visibility = View.VISIBLE
@@ -155,16 +220,15 @@ class ReportFragment : Fragment() {
                 }
 
                 is SubmissionStatus.SUCCESS -> {
-                    // Show progress bar for 2 seconds BEFORE showing the success dialog
                     binding.progressBarContainer.visibility = View.VISIBLE
-                    binding.btnSubmitReport.isEnabled = false // Keep button disabled during this phase
+                    binding.btnSubmitReport.isEnabled = false
 
                     Handler(Looper.getMainLooper()).postDelayed({
+                        if (_binding == null) return@postDelayed // Cek null lagi
                         binding.progressBarContainer.visibility = View.GONE
-                        binding.btnSubmitReport.isEnabled = true // Re-enable before showing dialog or after, depending on desired UX
+                        binding.btnSubmitReport.isEnabled = true
                         showSuccessDialog()
-                        // clearForm() and resetSubmissionStatus() are called after dialog dismissal
-                    }, 2000) // 2 seconds delay
+                    }, 2000)
                 }
 
                 is SubmissionStatus.ERROR -> {
@@ -183,8 +247,9 @@ class ReportFragment : Fragment() {
     }
 
     private fun showSuccessDialog() {
+        if (!isAdded) return // Pastikan fragment masih ter-attach
         AlertDialog.Builder(requireContext())
-            .setIcon(R.drawable.abk_logo) // Make sure abk_logo exists
+            .setIcon(R.drawable.abk_logo)
             .setTitle("Berhasil")
             .setMessage("Terima Kasih telah berani melapor. Data Laporan Berhasil diunggah, kami akan membantu anda semaksimal mungkin, mohon bersabar.")
             .setPositiveButton("OK") { dialog, _ ->
@@ -203,7 +268,7 @@ class ReportFragment : Fragment() {
             { _, year, month, dayOfMonth ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)
-                val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")) // Corrected pattern
+                val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")) // Pattern yang umum
                 binding.etIncidentDate.setText(dateFormat.format(selectedDate.time))
             },
             calendar.get(Calendar.YEAR),
@@ -217,7 +282,9 @@ class ReportFragment : Fragment() {
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // Minta izin baca URI
         }
+        // Menggunakan resolveActivity untuk keamanan
         if (intent.resolveActivity(requireActivity().packageManager) != null) {
             imagePickerLauncher.launch(intent)
         } else {
@@ -227,7 +294,7 @@ class ReportFragment : Fragment() {
 
     private fun validateInputs(): Boolean {
         var isValid = true
-
+        // ... (validasi input lainnya tetap sama) ...
         if (binding.rgReporterType.checkedRadioButtonId == -1) {
             Toast.makeText(context, "Pilih jenis pelapor (Korban/Saksi)", Toast.LENGTH_SHORT).show()
             isValid = false
@@ -239,7 +306,6 @@ class ReportFragment : Fragment() {
         }
         if (binding.etIncidentDate.text.isNullOrBlank()) {
             Toast.makeText(context, "Tanggal kejadian tidak boleh kosong", Toast.LENGTH_SHORT).show()
-            // No requestFocus() here as etIncidentDate is not directly editable
             isValid = false
         }
         if (binding.etIncidentPlace.text.isNullOrBlank()) {
@@ -261,8 +327,8 @@ class ReportFragment : Fragment() {
             if (isValid) binding.etContactNumber.requestFocus()
             isValid = false
         }
-
-        if (reportViewModel.selectedImageFileName.value == null) {
+        // Validasi berdasarkan persistedImageUriString atau selectedImageUriString dari ViewModel
+        if (reportViewModel.selectedImageUriString.value == null) {
             Toast.makeText(context, "Unggah gambar/bukti pendukung", Toast.LENGTH_SHORT).show()
             isValid = false
         }
@@ -272,9 +338,11 @@ class ReportFragment : Fragment() {
 
     private fun submitReport() {
         if (!validateInputs()) {
-            reportViewModel.setImageUploading(false) // Ensure image upload simulation is also stopped
-            binding.progressBarContainer.visibility = View.GONE
-            binding.btnSubmitReport.isEnabled = true
+            reportViewModel.setImageUploading(false)
+            if (_binding != null) { // Cek null
+                binding.progressBarContainer.visibility = View.GONE
+                binding.btnSubmitReport.isEnabled = true
+            }
             return
         }
 
@@ -285,7 +353,8 @@ class ReportFragment : Fragment() {
         val incidentPlace = binding.etIncidentPlace.text.toString()
         val incidentDescription = binding.etIncidentDescription.text.toString()
         val contactNumber = binding.etContactNumber.text.toString()
-        val imageFileName = reportViewModel.selectedImageFileName.value
+        // Ambil imageUriString dari ViewModel
+        val imageUriStringToSave = reportViewModel.selectedImageUriString.value
 
         val report = ReportEntity(
             reporterType = reporterType,
@@ -294,7 +363,7 @@ class ReportFragment : Fragment() {
             incidentPlace = incidentPlace,
             incidentDescription = incidentDescription,
             contactNumber = contactNumber,
-            imageFileName = imageFileName,
+            imageUriString = imageUriStringToSave, // Simpan URI string
             submissionTimestamp = System.currentTimeMillis()
         )
 
@@ -302,37 +371,38 @@ class ReportFragment : Fragment() {
     }
 
     private fun clearForm() {
+        if (_binding == null) return // Cek null
         binding.rgReporterType.clearCheck()
         binding.etReporterName.text.clear()
-        binding.etIncidentDate.text.clear() // Also clear the text for etIncidentDate
+        binding.etIncidentDate.text.clear()
         binding.etIncidentPlace.text.clear()
         binding.etIncidentDescription.text.clear()
         binding.etContactNumber.text.clear()
 
         binding.etReporterName.error = null
-        // binding.etIncidentDate.error = null // Not needed as it's not an error field
         binding.etIncidentPlace.error = null
         binding.etIncidentDescription.error = null
         binding.etContactNumber.error = null
 
-        binding.tvUploadLabel.text = getString(R.string.label_unggah_bukti) // Make sure this string exists
-        binding.btnSelectFile.text = getString(R.string.button_pilih_berkas) // Make sure this string exists
+        binding.tvUploadLabel.text = getString(R.string.label_unggah_bukti)
+        binding.btnSelectFile.text = getString(R.string.button_pilih_berkas)
         binding.btnSelectFile.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.button_text_color // Make sure this color exists
+                R.color.button_text_color
             )
         )
         binding.btnSelectFile.background =
-            ContextCompat.getDrawable(requireContext(), R.drawable.button_background_light_purple) // Make sure this drawable exists
+            ContextCompat.getDrawable(requireContext(), R.drawable.button_background_light_purple)
 
         selectedImageUri = null
-        reportViewModel.setSelectedImageFileName(null)
-        reportViewModel.setImageUploading(false) // Ensure this is reset
+        persistedImageUriString = null // Reset juga persisted URI
+        reportViewModel.setSelectedImageUriString(null) // Reset di ViewModel
+        reportViewModel.setImageUploading(false)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        _binding = null // Penting untuk menghindari memory leak
     }
 }
